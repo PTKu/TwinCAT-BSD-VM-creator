@@ -24,6 +24,37 @@ Usage
 PS C:\YOUR_FOLDER\.\Create-TcBsdVM.ps1 MyLovelyTcBSD TCBSD-x64-12-40411.iso
 ~~~
 
+## Using the bash script
+
+The included bash script ``create_tc_bsd_vm.sh`` will generate a VM with the
+following specifications:
+
+* 8GB OS primary OS (SATA) disk image
+* 1GB of RAM
+* One network adapter (NAT -> may require reconfiguration; see below)
+* The bootable TwinCAT BSD installation media connected as the second SATA drive
+    * This will boot until the installation is complete. It can be removed
+      after installation is done, but it will not interfere with TC/BSD
+      from booting post-installation even if it remains.
+
+In order to use it, you must:
+
+* Download TwinCAT BSD image from Beckhoff first. Place it in the same
+  directory as the script.
+* Run ``./create_tc_bsd_vm.sh your_plc_name_here [/path/to/tcbsd.iso]``
+
+Notes:
+
+* If you only have a single TCBSD ISO in the same directory, the script will
+  find it and use it automatically. In that case, you will only need to specify
+  the PLC name.
+* VBoxManage is expected to be on the ``PATH`` prior to running the script.
+* After creating a VM, a file browser will be opened to the path where the
+  generated image is.
+* The script will register the VM with VirtualBox.  If a VM already is
+  registered with the same name, it will give you the option of unregistering
+  the old one.
+
 # Setting up the network interface
 
 If VMs network defaults to `NAT`, you may not be able to connect to the PLC. Therefore you should set the virtual network either to `Host-Only Adapter` if you are working with the PLC only from the host computer; or `Bridged Adpater` to set up a physical connection to the outside network.
